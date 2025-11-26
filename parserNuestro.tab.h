@@ -155,14 +155,15 @@ union YYSTYPE
 
     char* cadena;            // Para ID_TK, IDBOOLEANO_TK, CONSTANTE_TK
     LiteralT literal;        // Para literales
-    NombreDeTipoT tipo;      // Para tipo_base y d_tipo
-    int entero;              
-	double real;
+	int entero;              
+    double real;
     char caracter;
     int booleano;
+    NombreDeTipoT tipo;      // Para tipo_base y d_tipo
     ListaIDs* lista_ids;     // Para lista_id y lista_d_var
+	int id_simbolo; 		 // Para expresion operando y operando
 
-#line 166 "parserNuestro.tab.h"
+#line 167 "parserNuestro.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

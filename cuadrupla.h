@@ -11,7 +11,8 @@ typedef enum {
     MULTENT, MULTREAL,
     DIVENT, DIVREAL,
     ASIGNACION,
-    SALTO
+    SALTO,
+    MODULO
 } OperadorT;
 
 typedef struct {

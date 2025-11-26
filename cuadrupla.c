@@ -13,7 +13,7 @@ static int contadorTemp = 0;
 const char* nombreOperador[] = {
     "SUMAENT", "SUMAREAL", "RESTAENT", "RESTAREAL",
     "MULTENT", "MULTREAL", "DIVENT", "DIVREAL",
-    "ASIGNACION", "SALTO"
+    "ASIGNACION", "SALTO","MODULO"
 };
 
 /**
@@ -44,6 +44,8 @@ void gen(OperadorT op, int arg1, int arg2, int resultado) {
         fprintf(stderr, "Error: Se excedió el límite de cuádruplas (%d)\n", MAX_CUADRUPLAS);
         exit(1);
     }
+
+    printf("[DEBUG gen] op=%d arg1=%d arg2=%d res=%d\n", op, arg1, arg2, resultado);
     
     // Guardar en formato tabla[fila][columna]
     listaCuadruplas.tabla[numCuadruplas][0] = (int)op;

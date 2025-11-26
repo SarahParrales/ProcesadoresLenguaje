@@ -639,18 +639,18 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   172,   172,   176,   181,   185,   186,   190,   191,   192,
-     196,   200,   201,   202,   203,   207,   208,   209,   213,   217,
-     221,   225,   229,   233,   234,   235,   239,   243,   248,   253,
-     257,   261,   265,   269,   277,   285,   289,   296,   301,   308,
-     317,   319,   321,   323,   325,   329,   337,   338,   342,   343,
-     347,   348,   349,   350,   351,   356,   357,   359,   364,   367,
-     370,   373,   376,   379,   382,   385,   386,   389,   396,   397,
-     398,   399,   400,   401,   402,   403,   404,   408,   409,   410,
-     411,   412,   413,   418,   420,   421,   422,   423,   428,   433,
-     434,   438,   439,   440,   441,   442,   446,   449,   455,   459,
-     460,   463,   464,   467,   471,   475,   479,   483,   487,   491,
-     492,   496,   497,   498,   502,   506,   510,   511
+       0,   175,   175,   179,   184,   188,   189,   193,   194,   195,
+     199,   203,   204,   205,   206,   210,   211,   212,   216,   220,
+     224,   228,   232,   236,   237,   238,   242,   246,   251,   256,
+     260,   264,   268,   272,   280,   288,   292,   298,   303,   309,
+     318,   320,   322,   324,   326,   330,   338,   339,   343,   344,
+     348,   349,   350,   351,   352,   357,   361,   363,   368,   384,
+     394,   404,   410,   416,   422,   426,   430,   447,   454,   455,
+     456,   457,   458,   459,   460,   461,   462,   466,   467,   468,
+     469,   470,   471,   476,   493,   494,   495,   496,   553,   558,
+     559,   563,   564,   565,   566,   567,   571,   576,   582,   586,
+     587,   590,   591,   594,   598,   602,   606,   610,   614,   618,
+     619,   623,   624,   625,   629,   633,   637,   638
 };
 #endif
 
@@ -1410,7 +1410,7 @@ yyreduce:
   switch (yyn)
     {
   case 26: /* lista_d_const: ID_TK IGUAL_TK literal PUNTOYCOMA_TK lista_d_const  */
-#line 240 "parserNuestro.y"
+#line 243 "parserNuestro.y"
         {
         insertaConstante(&tc, (yyvsp[-4].cadena), (yyvsp[-2].literal));
     }
@@ -1418,7 +1418,7 @@ yyreduce:
     break;
 
   case 27: /* lista_d_const: IDBOOLEANO_TK IGUAL_TK literal PUNTOYCOMA_TK lista_d_const  */
-#line 244 "parserNuestro.y"
+#line 247 "parserNuestro.y"
         {
         insertaConstante(&tc, (yyvsp[-4].cadena), (yyvsp[-2].literal));
     }
@@ -1426,13 +1426,13 @@ yyreduce:
     break;
 
   case 28: /* lista_d_const: %empty  */
-#line 248 "parserNuestro.y"
+#line 251 "parserNuestro.y"
         {}
 #line 1432 "parserNuestro.tab.c"
     break;
 
   case 29: /* literal: LITERAL_BOOLEANO_TK  */
-#line 254 "parserNuestro.y"
+#line 257 "parserNuestro.y"
         {
 		(yyval.literal) = nuevoLiteralBooleano((yyvsp[0].booleano)); 
 	}
@@ -1440,7 +1440,7 @@ yyreduce:
     break;
 
   case 30: /* literal: LITERAL_CADENA_TK  */
-#line 258 "parserNuestro.y"
+#line 261 "parserNuestro.y"
         {
 		(yyval.literal) = nuevoLiteralCadena((yyvsp[0].cadena));
 	}
@@ -1448,7 +1448,7 @@ yyreduce:
     break;
 
   case 31: /* literal: LITERAL_CARACTER_TK  */
-#line 262 "parserNuestro.y"
+#line 265 "parserNuestro.y"
         {
 		(yyval.literal) = nuevoLiteralCaracter((yyvsp[0].caracter));
 	}
@@ -1456,7 +1456,7 @@ yyreduce:
     break;
 
   case 32: /* literal: LITERAL_ENTERO_TK  */
-#line 266 "parserNuestro.y"
+#line 269 "parserNuestro.y"
         {
 		(yyval.literal) = nuevoLiteralEntero((yyvsp[0].entero));
 	}
@@ -1464,7 +1464,7 @@ yyreduce:
     break;
 
   case 33: /* literal: LITERAL_REAL_TK  */
-#line 270 "parserNuestro.y"
+#line 273 "parserNuestro.y"
         {
 		(yyval.literal) = nuevoLiteralReal((yyvsp[0].real));
 	}
@@ -1472,7 +1472,7 @@ yyreduce:
     break;
 
   case 34: /* lista_d_var: lista_id DOSPUNTOS_TK d_tipo PUNTOYCOMA_TK lista_d_var  */
-#line 277 "parserNuestro.y"
+#line 280 "parserNuestro.y"
                                                            {
         // Agregamos todos los IDs a la tabla de símbolos con el tipo $3
         for(int i = 0; i < (yyvsp[-4].lista_ids)->n; i++) {
@@ -1485,235 +1485,362 @@ yyreduce:
     break;
 
   case 35: /* lista_d_var: %empty  */
-#line 285 "parserNuestro.y"
+#line 288 "parserNuestro.y"
                       {}
 #line 1491 "parserNuestro.tab.c"
     break;
 
   case 36: /* lista_id: ID_TK  */
-#line 289 "parserNuestro.y"
+#line 292 "parserNuestro.y"
           {
         // Creamos una nueva lista prov con un solo ID
-        ListaIDs* l = nuevaListaIDs();
-        l->n = 1;
-        l->ids[0] = strdup((yyvsp[0].cadena));
-        (yyval.lista_ids) = l;
+        (yyval.lista_ids) = nuevaListaIDs();
+        (yyval.lista_ids)->n = 1;
+        (yyval.lista_ids)->ids[0] = strdup((yyvsp[0].cadena));
     }
-#line 1503 "parserNuestro.tab.c"
+#line 1502 "parserNuestro.tab.c"
     break;
 
   case 37: /* lista_id: ID_TK COMA_TK lista_id  */
-#line 296 "parserNuestro.y"
+#line 298 "parserNuestro.y"
                            {
         // Añadimos el ID al inicio de la lista ya existente
         agregarID((yyvsp[0].lista_ids), (yyvsp[-2].cadena));
         (yyval.lista_ids) = (yyvsp[0].lista_ids);
     }
-#line 1513 "parserNuestro.tab.c"
+#line 1512 "parserNuestro.tab.c"
     break;
 
   case 38: /* lista_id: IDBOOLEANO_TK  */
-#line 301 "parserNuestro.y"
+#line 303 "parserNuestro.y"
                   {
         // Creamos una nueva lista prov con un solo ID booleano
-        ListaIDs* l = nuevaListaIDs();
-        l->n = 1;
-        l->ids[0] = strdup((yyvsp[0].cadena));
-        (yyval.lista_ids) = l;
+        (yyval.lista_ids) = nuevaListaIDs();
+        (yyval.lista_ids)->n = 1;
+        (yyval.lista_ids)->ids[0] = strdup((yyvsp[0].cadena));
     }
-#line 1525 "parserNuestro.tab.c"
+#line 1523 "parserNuestro.tab.c"
     break;
 
   case 39: /* lista_id: IDBOOLEANO_TK COMA_TK lista_id  */
-#line 308 "parserNuestro.y"
+#line 309 "parserNuestro.y"
                                    {
         // Añadimos el ID booleano al inicio de la lista ya existente
         agregarID((yyvsp[0].lista_ids), (yyvsp[-2].cadena));
         (yyval.lista_ids) = (yyvsp[0].lista_ids);
     }
-#line 1535 "parserNuestro.tab.c"
+#line 1533 "parserNuestro.tab.c"
     break;
 
   case 40: /* d_tipo: TUPLA_TK lista_campos FTUPLA_TK  */
-#line 318 "parserNuestro.y"
+#line 319 "parserNuestro.y"
         {}
-#line 1541 "parserNuestro.tab.c"
+#line 1539 "parserNuestro.tab.c"
     break;
 
   case 41: /* d_tipo: TABLA_TK INICIO_ARRAY_TK expresion_t DOBLEPUNTO_TK expresion_t CIERRE_ARRAY_TK DE_TK d_tipo  */
-#line 320 "parserNuestro.y"
+#line 321 "parserNuestro.y"
         {}
-#line 1547 "parserNuestro.tab.c"
+#line 1545 "parserNuestro.tab.c"
     break;
 
   case 42: /* d_tipo: ID_TK  */
-#line 322 "parserNuestro.y"
+#line 323 "parserNuestro.y"
         {}
-#line 1553 "parserNuestro.tab.c"
+#line 1551 "parserNuestro.tab.c"
     break;
 
   case 43: /* d_tipo: expresion_t DOBLEPUNTO_TK expresion_t  */
-#line 324 "parserNuestro.y"
+#line 325 "parserNuestro.y"
         {}
-#line 1559 "parserNuestro.tab.c"
+#line 1557 "parserNuestro.tab.c"
     break;
 
   case 44: /* d_tipo: REF_TK d_tipo  */
-#line 326 "parserNuestro.y"
+#line 327 "parserNuestro.y"
         {
 		(yyval.tipo) = (yyvsp[0].tipo);
 	}
-#line 1567 "parserNuestro.tab.c"
+#line 1565 "parserNuestro.tab.c"
     break;
 
   case 45: /* d_tipo: tipo_base  */
-#line 330 "parserNuestro.y"
+#line 331 "parserNuestro.y"
         {
 		(yyval.tipo) = (yyvsp[0].tipo);
 	}
-#line 1575 "parserNuestro.tab.c"
+#line 1573 "parserNuestro.tab.c"
     break;
 
   case 50: /* tipo_base: ENTERO_TK  */
-#line 347 "parserNuestro.y"
+#line 348 "parserNuestro.y"
                 { (yyval.tipo) = ENTERO; }
-#line 1581 "parserNuestro.tab.c"
+#line 1579 "parserNuestro.tab.c"
     break;
 
   case 51: /* tipo_base: BOOLEANO_TK  */
-#line 348 "parserNuestro.y"
+#line 349 "parserNuestro.y"
                 { (yyval.tipo) = BOOLEANO; }
-#line 1587 "parserNuestro.tab.c"
+#line 1585 "parserNuestro.tab.c"
     break;
 
   case 52: /* tipo_base: CARACTER_TK  */
-#line 349 "parserNuestro.y"
+#line 350 "parserNuestro.y"
                 { (yyval.tipo) = CARACTER; }
-#line 1593 "parserNuestro.tab.c"
+#line 1591 "parserNuestro.tab.c"
     break;
 
   case 53: /* tipo_base: REAL_TK  */
-#line 350 "parserNuestro.y"
+#line 351 "parserNuestro.y"
                 { (yyval.tipo) = REAL; }
-#line 1599 "parserNuestro.tab.c"
+#line 1597 "parserNuestro.tab.c"
     break;
 
   case 54: /* tipo_base: CADENA_TK  */
-#line 351 "parserNuestro.y"
+#line 352 "parserNuestro.y"
                 { (yyval.tipo) = CADENA; }
-#line 1605 "parserNuestro.tab.c"
+#line 1603 "parserNuestro.tab.c"
     break;
 
-  case 56: /* expresion: exp_b  */
+  case 55: /* expresion: exp_a  */
 #line 358 "parserNuestro.y"
-        {}
+        {
+		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
+	}
 #line 1611 "parserNuestro.tab.c"
     break;
 
-  case 57: /* expresion: funcion_ll  */
-#line 360 "parserNuestro.y"
+  case 56: /* expresion: exp_b  */
+#line 362 "parserNuestro.y"
         {}
 #line 1617 "parserNuestro.tab.c"
     break;
 
+  case 57: /* expresion: funcion_ll  */
+#line 364 "parserNuestro.y"
+        {}
+#line 1623 "parserNuestro.tab.c"
+    break;
+
   case 58: /* exp_a: exp_a MAS_TK exp_a  */
-#line 365 "parserNuestro.y"
+#line 369 "parserNuestro.y"
         {
+		// Guardamos el tipo para saber el tipo de operacion suma (SUMAENT o SUMAREAL)
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice((yyvsp[-2].id_simbolo));
+		NombreDeTipoT tipo2 = obtenerTipoPorIndice((yyvsp[0].id_simbolo));
+		
+		// Crear temporal del tipo apropiado
+		NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+		int temp = newTemp(tipoResultado);
+		
+		// Generar cuádrupla
+		OperadorT op = (tipoResultado == REAL) ? SUMAREAL : SUMAENT;
+		gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+		
+		(yyval.id_simbolo) = temp;
 	}
-#line 1624 "parserNuestro.tab.c"
+#line 1643 "parserNuestro.tab.c"
     break;
 
   case 59: /* exp_a: exp_a MENOS_TK exp_a  */
-#line 368 "parserNuestro.y"
+#line 385 "parserNuestro.y"
         {
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice((yyvsp[-2].id_simbolo));
+        NombreDeTipoT tipo2 = obtenerTipoPorIndice((yyvsp[0].id_simbolo));
+        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+        int temp = newTemp(tipoResultado);
+        OperadorT op = (tipoResultado == REAL) ? RESTAREAL : RESTAENT;
+        gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1631 "parserNuestro.tab.c"
+#line 1657 "parserNuestro.tab.c"
     break;
 
   case 60: /* exp_a: exp_a MULTIPLICACION_TK exp_a  */
-#line 371 "parserNuestro.y"
+#line 395 "parserNuestro.y"
         {
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice((yyvsp[-2].id_simbolo));
+        NombreDeTipoT tipo2 = obtenerTipoPorIndice((yyvsp[0].id_simbolo));
+        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+        int temp = newTemp(tipoResultado);
+        OperadorT op = (tipoResultado == REAL) ? MULTREAL : MULTENT;
+        gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1638 "parserNuestro.tab.c"
+#line 1671 "parserNuestro.tab.c"
     break;
 
   case 61: /* exp_a: exp_a DIVREAL_TK exp_a  */
-#line 374 "parserNuestro.y"
+#line 405 "parserNuestro.y"
         {
+		int temp = newTemp(REAL);
+        gen(DIVREAL, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1645 "parserNuestro.tab.c"
+#line 1681 "parserNuestro.tab.c"
     break;
 
   case 62: /* exp_a: exp_a MOD_TK exp_a  */
-#line 377 "parserNuestro.y"
+#line 411 "parserNuestro.y"
         {
+		int temp = newTemp(ENTERO);
+        gen(MODULO, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1652 "parserNuestro.tab.c"
+#line 1691 "parserNuestro.tab.c"
     break;
 
   case 63: /* exp_a: exp_a DIV_TK exp_a  */
-#line 380 "parserNuestro.y"
+#line 417 "parserNuestro.y"
         {
+		int temp = newTemp(ENTERO);
+        gen(DIVENT, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1659 "parserNuestro.tab.c"
+#line 1701 "parserNuestro.tab.c"
     break;
 
   case 64: /* exp_a: PARENTESIS_APERTURA_TK exp_a PARENTESIS_CIERRE_TK  */
-#line 383 "parserNuestro.y"
+#line 423 "parserNuestro.y"
         {
+		(yyval.id_simbolo) = (yyvsp[-1].id_simbolo);
 	}
-#line 1666 "parserNuestro.tab.c"
+#line 1709 "parserNuestro.tab.c"
     break;
 
   case 65: /* exp_a: operando  */
-#line 385 "parserNuestro.y"
-                   {}
-#line 1672 "parserNuestro.tab.c"
+#line 427 "parserNuestro.y"
+        {
+		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
+	}
+#line 1717 "parserNuestro.tab.c"
     break;
 
   case 66: /* exp_a: MENOS_TK exp_a  */
-#line 387 "parserNuestro.y"
+#line 431 "parserNuestro.y"
         {
+		NombreDeTipoT tipo = obtenerTipoPorIndice((yyvsp[0].id_simbolo));
+        int temp = newTemp(tipo);
+        
+        // Crear constante 0
+        char nombreCero[10];
+        sprintf(nombreCero, "_cero");
+        int idCero = buscarSimbolo(nombreCero);
+        if (idCero == -1) {
+            idCero = agregarVariable(nombreCero, tipo);
+        }
+        
+        OperadorT op = (tipo == REAL) ? RESTAREAL : RESTAENT;
+        gen(op, idCero, (yyvsp[0].id_simbolo), temp);
+        (yyval.id_simbolo) = temp;
 	}
-#line 1679 "parserNuestro.tab.c"
+#line 1738 "parserNuestro.tab.c"
     break;
 
   case 67: /* exp_a: MAS_TK exp_a  */
-#line 390 "parserNuestro.y"
+#line 448 "parserNuestro.y"
         {
-		(yyval.literal) = (yyvsp[0].literal);
+		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1687 "parserNuestro.tab.c"
+#line 1746 "parserNuestro.tab.c"
     break;
 
   case 83: /* operando: ID_TK  */
-#line 419 "parserNuestro.y"
-        {	}
-#line 1693 "parserNuestro.tab.c"
+#line 477 "parserNuestro.y"
+        {
+		// Buscar el ID en la tabla de símbolos
+		int id = buscarSimbolo((yyvsp[0].cadena));
+		if (id == -1) {
+			// Si es una constante, buscarla en tabla de constantes
+			LiteralT* lit = buscarConstante(&tc, (yyvsp[0].cadena));
+			if (lit != NULL) {
+				// Crear entrada temporal en tabla de símbolos para la constante
+				id = agregarVariable((yyvsp[0].cadena), lit->tipoDelValor);
+			} else {
+				printf("Error: identificador '%s' no declarado\n", (yyvsp[0].cadena));
+				exit(1);
+			}
+		}
+		(yyval.id_simbolo) = id;
+	}
+#line 1767 "parserNuestro.tab.c"
     break;
 
   case 87: /* operando: literal  */
-#line 424 "parserNuestro.y"
-        {	}
-#line 1699 "parserNuestro.tab.c"
+#line 497 "parserNuestro.y"
+{
+    char tempName[50];
+    int idTemp;
+
+    switch((yyvsp[0].literal).tipoDelValor) {
+        case ENTERO:
+            sprintf(tempName, "_lit%d", (yyvsp[0].literal).valor.valorEntero);
+            break;
+
+        case BOOLEANO:
+            if ((yyvsp[0].literal).valor.valorBooleano == VERDADERO)
+                sprintf(tempName, "_litverdadero");
+            else
+                sprintf(tempName, "_litfalso");
+            break;
+
+        case REAL:
+            sprintf(tempName, "_lit%g", (yyvsp[0].literal).valor.valorReal);
+            break;
+
+        case CARACTER:
+            sprintf(tempName, "_lit%c", (yyvsp[0].literal).valor.valorCaracter);
+            break;
+
+        case CADENA:
+            // convertir espacios u otros símbolos a _
+            {
+                int j = 0;
+                for(int i = 0; (yyvsp[0].literal).valor.valorCadena[i] != '\0' && j < 40; i++) {
+                    char c = (yyvsp[0].literal).valor.valorCadena[i];
+                    tempName[j++] = ((c >= 'a' && c <= 'z') || 
+                                     (c >= 'A' && c <= 'Z') || 
+                                     (c >= '0' && c <= '9')) ? c : '_';
+                }
+                tempName[j] = '\0';
+                char auxName[40];
+                sprintf(auxName, "_lit%s", tempName);
+                strcpy(tempName, auxName);
+            }
+            break;
+
+        default:
+            sprintf(tempName, "_lit_temp");
+    }
+
+    // Verificar si ya existe en tabla de símbolos
+    idTemp = buscarSimbolo(tempName);
+    if(idTemp == -1)
+        idTemp = agregarVariable(tempName, (yyvsp[0].literal).tipoDelValor);
+
+    (yyval.id_simbolo) = idTemp;
+}
+#line 1824 "parserNuestro.tab.c"
     break;
 
   case 96: /* asignacion: operando ASIGNACION_TK expresion  */
-#line 447 "parserNuestro.y"
+#line 572 "parserNuestro.y"
         {
-}
-#line 1706 "parserNuestro.tab.c"
+		printf("DEBUG: ASIGNACION generada: id_dest=%d id_src=%d\n", (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo));
+		gen(ASIGNACION, (yyvsp[0].id_simbolo), -1, (yyvsp[-2].id_simbolo));
+	}
+#line 1833 "parserNuestro.tab.c"
     break;
 
   case 97: /* asignacion: operando_booleano ASIGNACION_TK expresion  */
-#line 450 "parserNuestro.y"
+#line 577 "parserNuestro.y"
         {
 	}
-#line 1713 "parserNuestro.tab.c"
+#line 1840 "parserNuestro.tab.c"
     break;
 
 
-#line 1717 "parserNuestro.tab.c"
+#line 1844 "parserNuestro.tab.c"
 
       default: break;
     }
@@ -1906,7 +2033,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 514 "parserNuestro.y"
+#line 641 "parserNuestro.y"
 
 
 int main(int argc, char **argv){
@@ -1919,6 +2046,7 @@ int main(int argc, char **argv){
     tc = nuevaTablaDeConstantes();
 
     nuevaTablaDeSimbolos();   // Inicializamos la tabla de símbolos
+	inicializarCuadruplas();      // Inicializar cuádrupla
 
 	if (argc > 0)
 		yyin = fopen(argv[0], "r");
@@ -1927,6 +2055,7 @@ int main(int argc, char **argv){
 
 	yyparse();
 
+	printf("\n=== RESULTADOS DE LA COMPILACIÓN ===\n");
 	imprimeTablaDeConstantes(tc);
 	imprimirTabla();
 	imprimirCuadruplas();

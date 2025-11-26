@@ -131,14 +131,13 @@
 %union {
     char* cadena;            // Para ID_TK, IDBOOLEANO_TK, CONSTANTE_TK
     LiteralT literal;        // Para literales
-    NombreDeTipoT tipo;      // Para tipo_base y d_tipo
-    int entero;              
-	double real;
+	int entero;              
+    double real;
     char caracter;
     int booleano;
-	;
-
+    NombreDeTipoT tipo;      // Para tipo_base y d_tipo
     ListaIDs* lista_ids;     // Para lista_id y lista_d_var
+	int id_simbolo; 		 // Para expresion operando y operando
 }
 
 %type <tipo> tipo_base 
@@ -148,8 +147,10 @@
 %type <lista_ids> lista_d_var
 
 //añadido para expresiones:
-%type <literal> exp_a
-%type <literal> expresion
+%type <id_simbolo> exp_a
+%type <id_simbolo> expresion
+%type <id_simbolo> operando
+
 
 
  //PARTE 2.4: Asignacion de traducciones a las variables
@@ -290,10 +291,9 @@ lista_d_var:
 lista_id:
     ID_TK {
         // Creamos una nueva lista prov con un solo ID
-        ListaIDs* l = nuevaListaIDs();
-        l->n = 1;
-        l->ids[0] = strdup($1);
-        $$ = l;
+        $$ = nuevaListaIDs();
+        $$->n = 1;
+        $$->ids[0] = strdup($1);
     }
   | ID_TK COMA_TK lista_id {
         // Añadimos el ID al inicio de la lista ya existente
@@ -302,10 +302,9 @@ lista_id:
     }
   | IDBOOLEANO_TK {
         // Creamos una nueva lista prov con un solo ID booleano
-        ListaIDs* l = nuevaListaIDs();
-        l->n = 1;
-        l->ids[0] = strdup($1);
-        $$ = l;
+        $$ = nuevaListaIDs();
+        $$->n = 1;
+        $$->ids[0] = strdup($1);
     }
   | IDBOOLEANO_TK COMA_TK lista_id {
         // Añadimos el ID booleano al inicio de la lista ya existente
@@ -356,6 +355,9 @@ tipo_base:
 
 expresion:
 	exp_a
+	{
+		$$ = $1;
+	}
 	| exp_b
 	{}
 	| funcion_ll
@@ -365,28 +367,82 @@ expresion:
 exp_a:
 	exp_a MAS_TK exp_a
 	{
+		// Guardamos el tipo para saber el tipo de operacion suma (SUMAENT o SUMAREAL)
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
+		NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+		
+		// Crear temporal del tipo apropiado
+		NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+		int temp = newTemp(tipoResultado);
+		
+		// Generar cuádrupla
+		OperadorT op = (tipoResultado == REAL) ? SUMAREAL : SUMAENT;
+		gen(op, $1, $3, temp);
+		
+		$$ = temp;
 	}
 	| exp_a MENOS_TK exp_a
 	{
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
+        NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+        int temp = newTemp(tipoResultado);
+        OperadorT op = (tipoResultado == REAL) ? RESTAREAL : RESTAENT;
+        gen(op, $1, $3, temp);
+        $$ = temp;
 	}
 	| exp_a MULTIPLICACION_TK exp_a
 	{
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
+        NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+        int temp = newTemp(tipoResultado);
+        OperadorT op = (tipoResultado == REAL) ? MULTREAL : MULTENT;
+        gen(op, $1, $3, temp);
+        $$ = temp;
 	}
 	| exp_a DIVREAL_TK exp_a
 	{
+		int temp = newTemp(REAL);
+        gen(DIVREAL, $1, $3, temp);
+        $$ = temp;
 	}
 	| exp_a MOD_TK exp_a
 	{
+		int temp = newTemp(ENTERO);
+        gen(MODULO, $1, $3, temp);
+        $$ = temp;
 	}
 	| exp_a DIV_TK exp_a
 	{
+		int temp = newTemp(ENTERO);
+        gen(DIVENT, $1, $3, temp);
+        $$ = temp;
 	}
 	| PARENTESIS_APERTURA_TK exp_a PARENTESIS_CIERRE_TK
 	{
+		$$ = $2;
 	}
-	| operando {}
+	| operando 
+	{
+		$$ = $1;
+	}
 	| MENOS_TK exp_a %prec NEG_TK
 	{
+		NombreDeTipoT tipo = obtenerTipoPorIndice($2);
+        int temp = newTemp(tipo);
+        
+        // Crear constante 0
+        char nombreCero[10];
+        sprintf(nombreCero, "_cero");
+        int idCero = buscarSimbolo(nombreCero);
+        if (idCero == -1) {
+            idCero = agregarVariable(nombreCero, tipo);
+        }
+        
+        OperadorT op = (tipo == REAL) ? RESTAREAL : RESTAENT;
+        gen(op, idCero, $2, temp);
+        $$ = temp;
 	}
 	| MAS_TK exp_a %prec POS_TK
 	{
@@ -418,12 +474,64 @@ oprel:
 
 operando:
 	ID_TK
-	{	}
+	{
+		// Buscar el ID en la tabla de símbolos
+		int id = buscarSimbolo($1);
+		if (id == -1) {
+			// Si es una constante, buscarla en tabla de constantes
+			LiteralT* lit = buscarConstante(&tc, $1);
+			if (lit != NULL) {
+				// Crear entrada temporal en tabla de símbolos para la constante
+				id = agregarVariable($1, lit->tipoDelValor);
+			} else {
+				printf("Error: identificador '%s' no declarado\n", $1);
+				exit(1);
+			}
+		}
+		$$ = id;
+	}
 	| operando PUNTO_TK ID_TK
 	| operando INICIO_ARRAY_TK expresion CIERRE_ARRAY_TK
 	| operando REF_TK
 	| literal
-	{	}
+	{
+		char tempName[50];
+		int idTemp;
+
+		switch($1.tipoDelValor) {
+			case ENTERO:
+				sprintf(tempName, "_lit%d", $1.valor.valorEntero);
+				break;
+
+			case BOOLEANO:
+				if ($1.valor.valorBooleano == VERDADERO)
+					sprintf(tempName, "_litverdadero");
+				else
+					sprintf(tempName, "_litfalso");
+				break;
+
+			case REAL:
+				sprintf(tempName, "_lit%g", $1.valor.valorReal);
+				break;
+
+			case CARACTER:
+				sprintf(tempName, "_lit%c", $1.valor.valorCaracter);
+				break;
+
+			case CADENA:
+				// convertir espacios u otros símbolos
+				break;
+
+			default:
+				sprintf(tempName, "_lit_temp");
+		}
+		// Verificar si ya existe en tabla de símbolos
+		idTemp = buscarSimbolo(tempName);
+		if(idTemp == -1)
+			idTemp = agregarVariable(tempName, $1.tipoDelValor);
+		$$ = idTemp;
+	}
+
 	;
 
 operando_booleano:
@@ -447,7 +555,9 @@ instruccion:
 asignacion:
 	operando ASIGNACION_TK expresion
 	{
-}
+		printf("DEBUG: ASIGNACION generada: id_dest=%d id_src=%d\n", $1, $3);
+		gen(ASIGNACION, $3, -1, $1);
+	}
 	| operando_booleano ASIGNACION_TK expresion
 	{
 	}
@@ -525,6 +635,7 @@ int main(int argc, char **argv){
     tc = nuevaTablaDeConstantes();
 
     nuevaTablaDeSimbolos();   // Inicializamos la tabla de símbolos
+	inicializarCuadruplas();      // Inicializar cuádrupla
 
 	if (argc > 0)
 		yyin = fopen(argv[0], "r");
@@ -533,6 +644,7 @@ int main(int argc, char **argv){
 
 	yyparse();
 
+	printf("\n=== RESULTADOS DE LA COMPILACIÓN ===\n");
 	imprimeTablaDeConstantes(tc);
 	imprimirTabla();
 	imprimirCuadruplas();

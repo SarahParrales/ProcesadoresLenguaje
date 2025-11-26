@@ -59,21 +59,22 @@ const char* obtenerNombrePorIndice(int indice) {
     return tablaDeSimbolos[indice].nombre;
 }
 
-void agregarVariable(char * nombreVariable, NombreDeTipoT tipoVariable) {
+int agregarVariable(char * nombreVariable, NombreDeTipoT tipoVariable) {
     // Comprobar si ya existe
-    if (buscarSimbolo(nombreVariable) != -1) {
+    int idx = buscarSimbolo(nombreVariable);
+    if (idx != -1) {
         printf("Error: identificador '%s' ya declarado\n", nombreVariable);
-        return; // no insertamos de nuevo
+        return idx; // retornamos el índice existente
     }
 
     if (pos >= MAX_SIMBOLOS) {
         printf("Error: Tabla de simbolos llena\n");
-        return;
+        exit(1);
     }
 
     tablaDeSimbolos[pos].nombre = strdup(nombreVariable);
     tablaDeSimbolos[pos].tipo = tipoVariable;
-    pos++;
+    return pos++;
 }
 
 
@@ -102,4 +103,5 @@ void imprimirTabla() {
 
 
 //OPERACIONES PARA EXPRESIONES: (+,-,*,/)
+
 

@@ -16,5 +16,8 @@ TablaDeConstantes nuevaTablaDeConstantes(void);
 bool insertaConstante(TablaDeConstantes *, char *, LiteralT);
 void imprimeTablaDeConstantes(TablaDeConstantes);
 
+//agregada:
+LiteralT* buscarConstante(TablaDeConstantes* tc, const char* nombre);
+
 #endif
 

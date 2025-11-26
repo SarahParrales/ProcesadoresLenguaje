@@ -21,7 +21,7 @@ void nuevaTablaDeSimbolos(void);
 // Busca un símbolo por nombre; devuelve índice o -1 si no existe
 int buscarSimbolo(const char *);
 // Agrega una variable con valor por defecto según su tipo
-void agregarVariable(char *, NombreDeTipoT );
+int agregarVariable(char *, NombreDeTipoT );
 
 // Obtiene el tipo de una variable por su nombre
 NombreDeTipoT obtenerTipo(const char *nombre);
