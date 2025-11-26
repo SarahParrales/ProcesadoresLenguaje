@@ -11,7 +11,6 @@
 typedef struct {
     char * nombre;  // nombre de la variable
     NombreDeTipoT tipo;     // tipo de la variable
-    LiteralT valor; // valor actual de la variable
 } CeldaSimbolos;
 
 extern CeldaSimbolos tablaDeSimbolos[MAX_SIMBOLOS];
@@ -22,28 +21,18 @@ void nuevaTablaDeSimbolos(void);
 // Busca un símbolo por nombre; devuelve índice o -1 si no existe
 int buscarSimbolo(const char *);
 // Agrega una variable con valor por defecto según su tipo
-void agregarVariableInicial(char *, NombreDeTipoT );
-// Agrega una variable con valor específico
-void agregarVariableConValor(char *, NombreDeTipoT , LiteralT );
-// Obtiene el valor de una variable por su nombre
-LiteralT obtenerValor(const char *);
-// Actualiza el valor de una variable existente
-void actualizarValor(const char *, LiteralT );
+void agregarVariable(char *, NombreDeTipoT );
+
+// Obtiene el tipo de una variable por su nombre
+NombreDeTipoT obtenerTipo(const char *nombre);
+// Obtiene el tipo de una variable por su índice
+NombreDeTipoT obtenerTipoPorIndice(int indice);
+// Obtiene el nombre de una variable por su índice
+const char* obtenerNombrePorIndice(int indice);
+
 // Convierte un NombreDeTipoT a string
 const char* nombreDeTipoToString(NombreDeTipoT );
 // Imprime la tabla de símbolos completa
 void imprimirTabla(void);
-
-//para exp_a:
-LiteralT sumarLiterales(LiteralT a, LiteralT b);
-LiteralT restarLiterales(LiteralT a, LiteralT b);
-LiteralT multiplicarLiterales(LiteralT a, LiteralT b);
-LiteralT divisionRealLiterales(LiteralT a, LiteralT b);
-LiteralT divisionEnteraLiterales(LiteralT a, LiteralT b);
-LiteralT moduloLiterales(LiteralT a, LiteralT b);
-LiteralT negarLiteral(LiteralT a);
-
-//para asignacion
-void asignarValor(const char* , LiteralT );
 
 #endif

@@ -1,4 +1,4 @@
- // Autor: Sarah Parrales Gomez
+ // Autor: Sarah Parrales Gomez y Jon Iker Ormaetxea Nunes
  // Fecha: 4/10/25
 
 
@@ -14,6 +14,7 @@
 	#include "literal.h"
 	#include "tablaDeConstantes.h"
 	#include "tablaDeSimbolos.h"
+	#include "cuadrupla.h"
 	#include "parserNuestro.tab.h"
 
 	int yylex();
@@ -276,7 +277,7 @@ lista_d_var:
     lista_id DOSPUNTOS_TK d_tipo PUNTOYCOMA_TK lista_d_var {
         // Agregamos todos los IDs a la tabla de símbolos con el tipo $3
         for(int i = 0; i < $1->n; i++) {
-            agregarVariableInicial($1->ids[i], $3);
+            agregarVariable($1->ids[i], $3);
             free($1->ids[i]); // liberamos la memoria de cada ID (ya no la necesitamos -> esta en var)
         }
         free($1); // liberamos la lista en sí    
@@ -362,36 +363,28 @@ expresion:
 exp_a:
 	exp_a MAS_TK exp_a
 	{
-		$$ = sumarLiterales($1, $3);
 	}
 	| exp_a MENOS_TK exp_a
 	{
-		$$ = restarLiterales($1, $3);
 	}
 	| exp_a MULTIPLICACION_TK exp_a
 	{
-		$$ = multiplicarLiterales($1, $3);
 	}
 	| exp_a DIVREAL_TK exp_a
 	{
-		$$ = divisionRealLiterales($1, $3); 
 	}
 	| exp_a MOD_TK exp_a
 	{
-		$$ = moduloLiterales($1, $3);
 	}
 	| exp_a DIV_TK exp_a
 	{
-		$$ = divisionEnteraLiterales($1, $3);
 	}
 	| PARENTESIS_APERTURA_TK exp_a PARENTESIS_CIERRE_TK
 	{
-		$$ = $2;
 	}
 	| operando {}
 	| MENOS_TK exp_a %prec NEG_TK
 	{
-		$$ = negarLiteral($2);
 	}
 	| MAS_TK exp_a %prec POS_TK
 	{
@@ -540,6 +533,7 @@ int main(int argc, char **argv){
 
 	imprimeTablaDeConstantes(tc);
 	imprimirTabla();
+	imprimirCuadruplas();
 
 }
 

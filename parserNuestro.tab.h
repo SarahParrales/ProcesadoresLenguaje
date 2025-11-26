@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 119 "parserNuestro.y"
+#line 120 "parserNuestro.y"
 
     #include "listaIDs.h"
     #include "nombresDeTipos.h"
@@ -151,7 +151,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 130 "parserNuestro.y"
+#line 131 "parserNuestro.y"
 
     char* cadena;            // Para ID_TK, IDBOOLEANO_TK, CONSTANTE_TK
     LiteralT literal;        // Para literales
