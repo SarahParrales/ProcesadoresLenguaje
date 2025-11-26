@@ -136,6 +136,8 @@
 	double real;
     char caracter;
     int booleano;
+	;
+
     ListaIDs* lista_ids;     // Para lista_id y lista_d_var
 }
 
