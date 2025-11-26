@@ -135,7 +135,7 @@
 	double real;
     char caracter;
     int booleano;
-    ListaIDs* lista_ids;     // ✅ Para lista_id y lista_d_var
+    ListaIDs* lista_ids;     // Para lista_id y lista_d_var
 }
 
 %type <tipo> tipo_base 

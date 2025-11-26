@@ -4,7 +4,7 @@ b: booleano;
 sal a, d,e: entero;
 {Prec: a= A AND d = D AND b = B}
 const
-  C1 = 6;
+  C1 = 3;
   C2 = verdadero;
 fconst;
 var
