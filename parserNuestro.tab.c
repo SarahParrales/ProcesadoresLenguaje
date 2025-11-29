@@ -113,149 +113,7 @@
 #  endif
 # endif
 
-
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-/* "%code requires" blocks.  */
-#line 120 "parserNuestro.y"
-
-    #include "listaIDs.h"
-    #include "nombresDeTipos.h"
-    #include "literal.h"
-    #include "tablaDeConstantes.h"
-    #include "tablaDeSimbolos.h"
-
-#line 134 "parserNuestro.tab.c"
-
-/* Token kinds.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    MAS_TK = 258,                  /* MAS_TK  */
-    MENOS_TK = 259,                /* MENOS_TK  */
-    ID_TK = 260,                   /* ID_TK  */
-    IDBOOLEANO_TK = 261,           /* IDBOOLEANO_TK  */
-    CONSTANTE_TK = 262,            /* CONSTANTE_TK  */
-    LITERAL_BOOLEANO_TK = 263,     /* LITERAL_BOOLEANO_TK  */
-    LITERAL_ENTERO_TK = 264,       /* LITERAL_ENTERO_TK  */
-    LITERAL_REAL_TK = 265,         /* LITERAL_REAL_TK  */
-    LITERAL_CADENA_TK = 266,       /* LITERAL_CADENA_TK  */
-    LITERAL_CARACTER_TK = 267,     /* LITERAL_CARACTER_TK  */
-    ACCION_TK = 268,               /* ACCION_TK  */
-    ALGORITMO_TK = 269,            /* ALGORITMO_TK  */
-    BOOLEANO_TK = 270,             /* BOOLEANO_TK  */
-    CADENA_TK = 271,               /* CADENA_TK  */
-    CARACTER_TK = 272,             /* CARACTER_TK  */
-    CONST_TK = 273,                /* CONST_TK  */
-    CONTINUAR_TK = 274,            /* CONTINUAR_TK  */
-    DE_TK = 275,                   /* DE_TK  */
-    DEV_TK = 276,                  /* DEV_TK  */
-    DIV_TK = 277,                  /* DIV_TK  */
-    ENT_TK = 278,                  /* ENT_TK  */
-    ENTERO_TK = 279,               /* ENTERO_TK  */
-    E_S_TK = 280,                  /* E_S_TK  */
-    FACCION_TK = 281,              /* FACCION_TK  */
-    FALGORITMO_TK = 282,           /* FALGORITMO_TK  */
-    FALSO_TK = 283,                /* FALSO_TK  */
-    FCONST_TK = 284,               /* FCONST_TK  */
-    FFUNCION_TK = 285,             /* FFUNCION_TK  */
-    FMIENTRAS_TK = 286,            /* FMIENTRAS_TK  */
-    FPARA_TK = 287,                /* FPARA_TK  */
-    FSI_TK = 288,                  /* FSI_TK  */
-    FTIPO_TK = 289,                /* FTIPO_TK  */
-    FTUPLA_TK = 290,               /* FTUPLA_TK  */
-    FUNCION_TK = 291,              /* FUNCION_TK  */
-    FVAR_TK = 292,                 /* FVAR_TK  */
-    HACER_TK = 293,                /* HACER_TK  */
-    HASTA_TK = 294,                /* HASTA_TK  */
-    MIENTRAS_TK = 295,             /* MIENTRAS_TK  */
-    MOD_TK = 296,                  /* MOD_TK  */
-    NO_TK = 297,                   /* NO_TK  */
-    O_TK = 298,                    /* O_TK  */
-    PARA_TK = 299,                 /* PARA_TK  */
-    REAL_TK = 300,                 /* REAL_TK  */
-    REF_TK = 301,                  /* REF_TK  */
-    SAL_TK = 302,                  /* SAL_TK  */
-    SI_TK = 303,                   /* SI_TK  */
-    TABLA_TK = 304,                /* TABLA_TK  */
-    TIPO_TK = 305,                 /* TIPO_TK  */
-    TUPLA_TK = 306,                /* TUPLA_TK  */
-    VAR_TK = 307,                  /* VAR_TK  */
-    VERDADERO_TK = 308,            /* VERDADERO_TK  */
-    Y_TK = 309,                    /* Y_TK  */
-    PRECONDICION_TK = 310,         /* PRECONDICION_TK  */
-    POSTCONDICION_TK = 311,        /* POSTCONDICION_TK  */
-    ASIGNACION_TK = 312,           /* ASIGNACION_TK  */
-    PUNTOYCOMA_TK = 313,           /* PUNTOYCOMA_TK  */
-    DOSPUNTOS_TK = 314,            /* DOSPUNTOS_TK  */
-    ENTONCES_TK = 315,             /* ENTONCES_TK  */
-    SINO_SI_TK = 316,              /* SINO_SI_TK  */
-    IGUAL_TK = 317,                /* IGUAL_TK  */
-    INICIO_ARRAY_TK = 318,         /* INICIO_ARRAY_TK  */
-    CIERRE_ARRAY_TK = 319,         /* CIERRE_ARRAY_TK  */
-    MULTIPLICACION_TK = 320,       /* MULTIPLICACION_TK  */
-    DIVREAL_TK = 321,              /* DIVREAL_TK  */
-    MAYORIGUAL_TK = 322,           /* MAYORIGUAL_TK  */
-    MENORIGUAL_TK = 323,           /* MENORIGUAL_TK  */
-    MAYOR_TK = 324,                /* MAYOR_TK  */
-    MENOR_TK = 325,                /* MENOR_TK  */
-    DISTINTO_TK = 326,             /* DISTINTO_TK  */
-    COMA_TK = 327,                 /* COMA_TK  */
-    LLAVE_APERTURA_TK = 328,       /* LLAVE_APERTURA_TK  */
-    LLAVE_CIERRE_TK = 329,         /* LLAVE_CIERRE_TK  */
-    PUNTO_TK = 330,                /* PUNTO_TK  */
-    DOBLEPUNTO_TK = 331,           /* DOBLEPUNTO_TK  */
-    PARENTESIS_APERTURA_TK = 332,  /* PARENTESIS_APERTURA_TK  */
-    PARENTESIS_CIERRE_TK = 333,    /* PARENTESIS_CIERRE_TK  */
-    COMENTARIO_TK = 334,           /* COMENTARIO_TK  */
-    NEG_TK = 335,                  /* NEG_TK  */
-    POS_TK = 336                   /* POS_TK  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
-#endif
-
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 131 "parserNuestro.y"
-
-    char* cadena;            // Para ID_TK, IDBOOLEANO_TK, CONSTANTE_TK
-    LiteralT literal;        // Para literales
-	int entero;              
-    double real;
-    char caracter;
-    int booleano;
-    NombreDeTipoT tipo;      // Para tipo_base y d_tipo
-    ListaIDs* lista_ids;     // Para lista_id y lista_d_var
-	int id_simbolo; 		 // Para expresion operando y operando
-
-#line 244 "parserNuestro.tab.c"
-
-};
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
-
-
-extern YYSTYPE yylval;
-
-
-int yyparse (void);
-
-
-
+#include "parserNuestro.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1556,7 +1414,7 @@ yyreduce:
         {
         insertaConstante(&tc, (yyvsp[-4].cadena), (yyvsp[-2].literal));
     	}
-#line 1560 "parserNuestro.tab.c"
+#line 1418 "parserNuestro.tab.c"
     break;
 
   case 27: /* lista_d_const: IDBOOLEANO_TK IGUAL_TK literal PUNTOYCOMA_TK lista_d_const  */
@@ -1564,13 +1422,13 @@ yyreduce:
         {
         insertaConstante(&tc, (yyvsp[-4].cadena), (yyvsp[-2].literal));
     	}
-#line 1568 "parserNuestro.tab.c"
+#line 1426 "parserNuestro.tab.c"
     break;
 
   case 28: /* lista_d_const: %empty  */
 #line 256 "parserNuestro.y"
         {}
-#line 1574 "parserNuestro.tab.c"
+#line 1432 "parserNuestro.tab.c"
     break;
 
   case 29: /* literal: LITERAL_BOOLEANO_TK  */
@@ -1578,7 +1436,7 @@ yyreduce:
         {
 		(yyval.literal) = (yyvsp[0].literal);
 	}
-#line 1582 "parserNuestro.tab.c"
+#line 1440 "parserNuestro.tab.c"
     break;
 
   case 30: /* literal: LITERAL_CADENA_TK  */
@@ -1586,7 +1444,7 @@ yyreduce:
         {
 		(yyval.literal) = (yyvsp[0].literal);
 	}
-#line 1590 "parserNuestro.tab.c"
+#line 1448 "parserNuestro.tab.c"
     break;
 
   case 31: /* literal: LITERAL_CARACTER_TK  */
@@ -1594,7 +1452,7 @@ yyreduce:
         {
 		(yyval.literal) = (yyvsp[0].literal);
 	}
-#line 1598 "parserNuestro.tab.c"
+#line 1456 "parserNuestro.tab.c"
     break;
 
   case 32: /* literal: LITERAL_ENTERO_TK  */
@@ -1602,7 +1460,7 @@ yyreduce:
         {
 		(yyval.literal) = (yyvsp[0].literal);
 	}
-#line 1606 "parserNuestro.tab.c"
+#line 1464 "parserNuestro.tab.c"
     break;
 
   case 33: /* literal: LITERAL_REAL_TK  */
@@ -1610,7 +1468,7 @@ yyreduce:
         {
 		(yyval.literal) = (yyvsp[0].literal);
 	}
-#line 1614 "parserNuestro.tab.c"
+#line 1472 "parserNuestro.tab.c"
     break;
 
   case 34: /* lista_d_var: lista_id DOSPUNTOS_TK d_tipo PUNTOYCOMA_TK lista_d_var  */
@@ -1623,13 +1481,13 @@ yyreduce:
         }
         free((yyvsp[-4].lista_ids)); // liberamos la lista
 	}
-#line 1627 "parserNuestro.tab.c"
+#line 1485 "parserNuestro.tab.c"
     break;
 
   case 35: /* lista_d_var: %empty  */
 #line 293 "parserNuestro.y"
                       {}
-#line 1633 "parserNuestro.tab.c"
+#line 1491 "parserNuestro.tab.c"
     break;
 
   case 36: /* lista_id: ID_TK  */
@@ -1640,7 +1498,7 @@ yyreduce:
         (yyval.lista_ids)->n = 1;
         (yyval.lista_ids)->ids[0] = strdup((yyvsp[0].cadena));
     }
-#line 1644 "parserNuestro.tab.c"
+#line 1502 "parserNuestro.tab.c"
     break;
 
   case 37: /* lista_id: ID_TK COMA_TK lista_id  */
@@ -1650,7 +1508,7 @@ yyreduce:
         agregarID((yyvsp[0].lista_ids), (yyvsp[-2].cadena));
         (yyval.lista_ids) = (yyvsp[0].lista_ids);
     }
-#line 1654 "parserNuestro.tab.c"
+#line 1512 "parserNuestro.tab.c"
     break;
 
   case 38: /* lista_id: IDBOOLEANO_TK  */
@@ -1661,7 +1519,7 @@ yyreduce:
         (yyval.lista_ids)->n = 1;
         (yyval.lista_ids)->ids[0] = strdup((yyvsp[0].cadena));
     }
-#line 1665 "parserNuestro.tab.c"
+#line 1523 "parserNuestro.tab.c"
     break;
 
   case 39: /* lista_id: IDBOOLEANO_TK COMA_TK lista_id  */
@@ -1671,31 +1529,31 @@ yyreduce:
         agregarID((yyvsp[0].lista_ids), (yyvsp[-2].cadena));
         (yyval.lista_ids) = (yyvsp[0].lista_ids);
     }
-#line 1675 "parserNuestro.tab.c"
+#line 1533 "parserNuestro.tab.c"
     break;
 
   case 40: /* d_tipo: TUPLA_TK lista_campos FTUPLA_TK  */
 #line 324 "parserNuestro.y"
         {}
-#line 1681 "parserNuestro.tab.c"
+#line 1539 "parserNuestro.tab.c"
     break;
 
   case 41: /* d_tipo: TABLA_TK INICIO_ARRAY_TK expresion_t DOBLEPUNTO_TK expresion_t CIERRE_ARRAY_TK DE_TK d_tipo  */
 #line 326 "parserNuestro.y"
         {}
-#line 1687 "parserNuestro.tab.c"
+#line 1545 "parserNuestro.tab.c"
     break;
 
   case 42: /* d_tipo: ID_TK  */
 #line 328 "parserNuestro.y"
         {}
-#line 1693 "parserNuestro.tab.c"
+#line 1551 "parserNuestro.tab.c"
     break;
 
   case 43: /* d_tipo: expresion_t DOBLEPUNTO_TK expresion_t  */
 #line 330 "parserNuestro.y"
         {}
-#line 1699 "parserNuestro.tab.c"
+#line 1557 "parserNuestro.tab.c"
     break;
 
   case 44: /* d_tipo: REF_TK d_tipo  */
@@ -1703,7 +1561,7 @@ yyreduce:
         {
 		(yyval.tipo) = (yyvsp[0].tipo);
 	}
-#line 1707 "parserNuestro.tab.c"
+#line 1565 "parserNuestro.tab.c"
     break;
 
   case 45: /* d_tipo: tipo_base  */
@@ -1711,37 +1569,37 @@ yyreduce:
         {
 		(yyval.tipo) = (yyvsp[0].tipo);
 	}
-#line 1715 "parserNuestro.tab.c"
+#line 1573 "parserNuestro.tab.c"
     break;
 
   case 50: /* tipo_base: ENTERO_TK  */
 #line 353 "parserNuestro.y"
                 { (yyval.tipo) = ENTERO; }
-#line 1721 "parserNuestro.tab.c"
+#line 1579 "parserNuestro.tab.c"
     break;
 
   case 51: /* tipo_base: BOOLEANO_TK  */
 #line 354 "parserNuestro.y"
                 { (yyval.tipo) = BOOLEANO; }
-#line 1727 "parserNuestro.tab.c"
+#line 1585 "parserNuestro.tab.c"
     break;
 
   case 52: /* tipo_base: CARACTER_TK  */
 #line 355 "parserNuestro.y"
                 { (yyval.tipo) = CARACTER; }
-#line 1733 "parserNuestro.tab.c"
+#line 1591 "parserNuestro.tab.c"
     break;
 
   case 53: /* tipo_base: REAL_TK  */
 #line 356 "parserNuestro.y"
                 { (yyval.tipo) = REAL; }
-#line 1739 "parserNuestro.tab.c"
+#line 1597 "parserNuestro.tab.c"
     break;
 
   case 54: /* tipo_base: CADENA_TK  */
 #line 357 "parserNuestro.y"
                 { (yyval.tipo) = CADENA; }
-#line 1745 "parserNuestro.tab.c"
+#line 1603 "parserNuestro.tab.c"
     break;
 
   case 55: /* expresion: exp_b  */
@@ -1749,7 +1607,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1753 "parserNuestro.tab.c"
+#line 1611 "parserNuestro.tab.c"
     break;
 
   case 56: /* expresion: exp_a  */
@@ -1757,13 +1615,13 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1761 "parserNuestro.tab.c"
+#line 1619 "parserNuestro.tab.c"
     break;
 
   case 57: /* expresion: funcion_ll  */
 #line 371 "parserNuestro.y"
         {}
-#line 1767 "parserNuestro.tab.c"
+#line 1625 "parserNuestro.tab.c"
     break;
 
   case 58: /* exp_a: exp_a MAS_TK exp_a  */
@@ -1783,7 +1641,7 @@ yyreduce:
 		
 		(yyval.id_simbolo) = temp;
 	}
-#line 1787 "parserNuestro.tab.c"
+#line 1645 "parserNuestro.tab.c"
     break;
 
   case 59: /* exp_a: exp_a MENOS_TK exp_a  */
@@ -1797,7 +1655,7 @@ yyreduce:
 		gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
 		(yyval.id_simbolo) = temp;
 	}
-#line 1801 "parserNuestro.tab.c"
+#line 1659 "parserNuestro.tab.c"
     break;
 
   case 60: /* exp_a: exp_a MULTIPLICACION_TK exp_a  */
@@ -1811,7 +1669,7 @@ yyreduce:
 		gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
 		(yyval.id_simbolo) = temp;
 	}
-#line 1815 "parserNuestro.tab.c"
+#line 1673 "parserNuestro.tab.c"
     break;
 
   case 61: /* exp_a: exp_a DIVREAL_TK exp_a  */
@@ -1821,7 +1679,7 @@ yyreduce:
         	gen(DIVREAL, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
         (yyval.id_simbolo) = temp;
 	}
-#line 1825 "parserNuestro.tab.c"
+#line 1683 "parserNuestro.tab.c"
     break;
 
   case 62: /* exp_a: exp_a MOD_TK exp_a  */
@@ -1831,7 +1689,7 @@ yyreduce:
         	gen(MODULO, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
         (yyval.id_simbolo) = temp;
 	}
-#line 1835 "parserNuestro.tab.c"
+#line 1693 "parserNuestro.tab.c"
     break;
 
   case 63: /* exp_a: exp_a DIV_TK exp_a  */
@@ -1841,7 +1699,7 @@ yyreduce:
         	gen(DIVENT, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
         (yyval.id_simbolo) = temp;
 	}
-#line 1845 "parserNuestro.tab.c"
+#line 1703 "parserNuestro.tab.c"
     break;
 
   case 64: /* exp_a: PARENTESIS_APERTURA_TK exp_a PARENTESIS_CIERRE_TK  */
@@ -1849,7 +1707,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[-1].id_simbolo);
 	}
-#line 1853 "parserNuestro.tab.c"
+#line 1711 "parserNuestro.tab.c"
     break;
 
   case 65: /* exp_a: operando  */
@@ -1857,7 +1715,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1861 "parserNuestro.tab.c"
+#line 1719 "parserNuestro.tab.c"
     break;
 
   case 66: /* exp_a: MENOS_TK exp_a  */
@@ -1878,7 +1736,7 @@ yyreduce:
 		gen(op, idCero, (yyvsp[0].id_simbolo), temp);
         	(yyval.id_simbolo) = temp;
 	}
-#line 1882 "parserNuestro.tab.c"
+#line 1740 "parserNuestro.tab.c"
     break;
 
   case 67: /* exp_a: MAS_TK exp_a  */
@@ -1886,7 +1744,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1890 "parserNuestro.tab.c"
+#line 1748 "parserNuestro.tab.c"
     break;
 
   case 68: /* exp_b: exp_b Y_TK exp_b  */
@@ -1896,7 +1754,7 @@ yyreduce:
 		gen(Y_OP, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
 		(yyval.id_simbolo) = temp;
 	}
-#line 1900 "parserNuestro.tab.c"
+#line 1758 "parserNuestro.tab.c"
     break;
 
   case 69: /* exp_b: exp_b O_TK exp_b  */
@@ -1906,7 +1764,7 @@ yyreduce:
 		gen(O_OP, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
 		(yyval.id_simbolo) = temp;
 	}
-#line 1910 "parserNuestro.tab.c"
+#line 1768 "parserNuestro.tab.c"
     break;
 
   case 70: /* exp_b: NO_TK exp_b  */
@@ -1916,7 +1774,7 @@ yyreduce:
 		gen(NO_OP, (yyvsp[0].id_simbolo), -1, temp); //solo importa el $2
 		(yyval.id_simbolo) = temp;
 	}
-#line 1920 "parserNuestro.tab.c"
+#line 1778 "parserNuestro.tab.c"
     break;
 
   case 71: /* exp_b: operando_booleano  */
@@ -1924,7 +1782,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[0].id_simbolo);
 	}
-#line 1928 "parserNuestro.tab.c"
+#line 1786 "parserNuestro.tab.c"
     break;
 
   case 72: /* exp_b: VERDADERO_TK  */
@@ -1938,7 +1796,7 @@ yyreduce:
 		}
 		(yyval.id_simbolo) = id;
 	}
-#line 1942 "parserNuestro.tab.c"
+#line 1800 "parserNuestro.tab.c"
     break;
 
   case 73: /* exp_b: FALSO_TK  */
@@ -1951,7 +1809,7 @@ yyreduce:
 		}
 		(yyval.id_simbolo) = id;
 	}
-#line 1955 "parserNuestro.tab.c"
+#line 1813 "parserNuestro.tab.c"
     break;
 
   case 74: /* exp_b: exp_a oprel exp_a  */
@@ -1984,7 +1842,7 @@ yyreduce:
 		gen(op, (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo), temp);
 		(yyval.id_simbolo) = temp;
 	}
-#line 1988 "parserNuestro.tab.c"
+#line 1846 "parserNuestro.tab.c"
     break;
 
   case 75: /* exp_b: PARENTESIS_APERTURA_TK exp_b PARENTESIS_CIERRE_TK  */
@@ -1992,7 +1850,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = (yyvsp[-1].id_simbolo);
 	}
-#line 1996 "parserNuestro.tab.c"
+#line 1854 "parserNuestro.tab.c"
     break;
 
   case 76: /* oprel: MENOR_TK  */
@@ -2000,7 +1858,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = MENORENT; //necesitamos saber si es ent o real -> por defecto entero
 	}
-#line 2004 "parserNuestro.tab.c"
+#line 1862 "parserNuestro.tab.c"
     break;
 
   case 77: /* oprel: MAYOR_TK  */
@@ -2008,7 +1866,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = MAYORENT;
 	}
-#line 2012 "parserNuestro.tab.c"
+#line 1870 "parserNuestro.tab.c"
     break;
 
   case 78: /* oprel: IGUAL_TK  */
@@ -2016,7 +1874,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = IGUALENT;
 	}
-#line 2020 "parserNuestro.tab.c"
+#line 1878 "parserNuestro.tab.c"
     break;
 
   case 79: /* oprel: DISTINTO_TK  */
@@ -2024,7 +1882,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = DISTINTENT;
 	}
-#line 2028 "parserNuestro.tab.c"
+#line 1886 "parserNuestro.tab.c"
     break;
 
   case 80: /* oprel: MAYORIGUAL_TK  */
@@ -2032,7 +1890,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = MAYORIGUALENT;
 	}
-#line 2036 "parserNuestro.tab.c"
+#line 1894 "parserNuestro.tab.c"
     break;
 
   case 81: /* oprel: MENORIGUAL_TK  */
@@ -2040,7 +1898,7 @@ yyreduce:
         {
 		(yyval.id_simbolo) = MENORIGUALENT;
 	}
-#line 2044 "parserNuestro.tab.c"
+#line 1902 "parserNuestro.tab.c"
     break;
 
   case 82: /* operando: ID_TK  */
@@ -2061,7 +1919,7 @@ yyreduce:
 		}
 		(yyval.id_simbolo) = id;
 	}
-#line 2065 "parserNuestro.tab.c"
+#line 1923 "parserNuestro.tab.c"
     break;
 
   case 86: /* operando: literal  */
@@ -2138,7 +1996,7 @@ yyreduce:
 		
 		(yyval.id_simbolo) = idTemp;
 	}
-#line 2142 "parserNuestro.tab.c"
+#line 2000 "parserNuestro.tab.c"
     break;
 
   case 87: /* operando_booleano: IDBOOLEANO_TK  */
@@ -2152,7 +2010,7 @@ yyreduce:
 		}
 		(yyval.id_simbolo) = id;
 	}
-#line 2156 "parserNuestro.tab.c"
+#line 2014 "parserNuestro.tab.c"
     break;
 
   case 95: /* asignacion: operando ASIGNACION_TK expresion  */
@@ -2161,7 +2019,7 @@ yyreduce:
 		printf("DEBUG: ASIGNACION generada: id_dest=%d id_src=%d\n", (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo));
 		gen(ASIGNACION, (yyvsp[0].id_simbolo), -1, (yyvsp[-2].id_simbolo));
 	}
-#line 2165 "parserNuestro.tab.c"
+#line 2023 "parserNuestro.tab.c"
     break;
 
   case 96: /* asignacion: operando_booleano ASIGNACION_TK expresion  */
@@ -2170,11 +2028,11 @@ yyreduce:
 		printf("DEBUG: ASIGNACION BOOLEANA: id_dest=%d id_src=%d\n", (yyvsp[-2].id_simbolo), (yyvsp[0].id_simbolo));
 		gen(ASIGNACION, (yyvsp[0].id_simbolo), -1, (yyvsp[-2].id_simbolo));
 	}
-#line 2174 "parserNuestro.tab.c"
+#line 2032 "parserNuestro.tab.c"
     break;
 
 
-#line 2178 "parserNuestro.tab.c"
+#line 2036 "parserNuestro.tab.c"
 
       default: break;
     }
