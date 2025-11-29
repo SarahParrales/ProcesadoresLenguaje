@@ -20,7 +20,7 @@ bool insertaConstante(TablaDeConstantes * ptc, char * pnombre, LiteralT v){
             printf("No hay memoria para una celda de la tabla de constantes");
             exit(1);
         } 
-        c->nombre = pnombre;
+        c->nombre = strdup(pnombre);
         c->valor = v;
         c->sig = *ptc;
         *ptc = c;
@@ -52,4 +52,4 @@ void imprimeTablaDeConstantes(TablaDeConstantes tc){
             aux = aux->sig;
         }
     }
-}
+}

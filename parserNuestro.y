@@ -36,11 +36,11 @@
 %token <cadena> IDBOOLEANO_TK
 %token <cadena> CONSTANTE_TK
 
-%token <booleano> LITERAL_BOOLEANO_TK
-%token <entero> LITERAL_ENTERO_TK
-%token <real> LITERAL_REAL_TK
-%token <cadena> LITERAL_CADENA_TK
-%token <caracter> LITERAL_CARACTER_TK
+%token <literal> LITERAL_BOOLEANO_TK
+%token <literal> LITERAL_ENTERO_TK
+%token <literal> LITERAL_REAL_TK
+%token <literal> LITERAL_CADENA_TK
+%token <literal> LITERAL_CARACTER_TK
 
 
 %token ACCION_TK
@@ -151,6 +151,11 @@
 %type <id_simbolo> expresion
 %type <id_simbolo> operando
 
+//añadido para expresiones booleanas:
+%type <id_simbolo> exp_b        
+%type <id_simbolo> oprel
+%type <id_simbolo> operando_booleano
+
 
 
  //PARTE 2.4: Asignacion de traducciones a las variables
@@ -242,11 +247,11 @@ lista_d_const:
     ID_TK IGUAL_TK literal PUNTOYCOMA_TK lista_d_const 
 	{
         insertaConstante(&tc, $1, $3);
-    }
+    	}
   	| IDBOOLEANO_TK IGUAL_TK literal PUNTOYCOMA_TK lista_d_const 
   	{
         insertaConstante(&tc, $1, $3);
-    }
+    	}
   	| /* empty */
   	{}
 ;
@@ -255,23 +260,23 @@ lista_d_const:
 literal:
     LITERAL_BOOLEANO_TK
 	{
-		$$ = nuevoLiteralBooleano($1); 
+		$$ = $1;
 	}
     | LITERAL_CADENA_TK
 	{
-		$$ = nuevoLiteralCadena($1);
+		$$ = $1;
 	}
     | LITERAL_CARACTER_TK
 	{
-		$$ = nuevoLiteralCaracter($1);
+		$$ = $1;
 	}
     | LITERAL_ENTERO_TK
 	{
-		$$ = nuevoLiteralEntero($1);
+		$$ = $1;
 	}
     | LITERAL_REAL_TK
 	{
-		$$ = nuevoLiteralReal($1);
+		$$ = $1;
 	}
 ;
 
@@ -283,7 +288,7 @@ lista_d_var:
             agregarVariable($1->ids[i], $3);
             free($1->ids[i]); // liberamos la memoria de cada ID (ya no la necesitamos -> esta en var)
         }
-        free($1); // liberamos la lista en sí    
+        free($1); // liberamos la lista
 	}
   	| /* empty */ {} 
 ;
@@ -354,12 +359,14 @@ tipo_base:
 
 
 expresion:
-	exp_a
+	exp_b
 	{
 		$$ = $1;
 	}
-	| exp_b
-	{}
+	| exp_a
+	{
+		$$ = $1;
+	}
 	| funcion_ll
 	{}
 	;
@@ -384,39 +391,39 @@ exp_a:
 	| exp_a MENOS_TK exp_a
 	{
 		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
-        NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
-        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
-        int temp = newTemp(tipoResultado);
-        OperadorT op = (tipoResultado == REAL) ? RESTAREAL : RESTAENT;
-        gen(op, $1, $3, temp);
-        $$ = temp;
+		NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+		NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+		int temp = newTemp(tipoResultado);
+		OperadorT op = (tipoResultado == REAL) ? RESTAREAL : RESTAENT;
+		gen(op, $1, $3, temp);
+		$$ = temp;
 	}
 	| exp_a MULTIPLICACION_TK exp_a
 	{
 		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
-        NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
-        NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
-        int temp = newTemp(tipoResultado);
-        OperadorT op = (tipoResultado == REAL) ? MULTREAL : MULTENT;
-        gen(op, $1, $3, temp);
-        $$ = temp;
+		NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+		NombreDeTipoT tipoResultado = (tipo1 == REAL || tipo2 == REAL) ? REAL : ENTERO;
+		int temp = newTemp(tipoResultado);
+		OperadorT op = (tipoResultado == REAL) ? MULTREAL : MULTENT;
+		gen(op, $1, $3, temp);
+		$$ = temp;
 	}
 	| exp_a DIVREAL_TK exp_a
 	{
 		int temp = newTemp(REAL);
-        gen(DIVREAL, $1, $3, temp);
+        	gen(DIVREAL, $1, $3, temp);
         $$ = temp;
 	}
 	| exp_a MOD_TK exp_a
 	{
 		int temp = newTemp(ENTERO);
-        gen(MODULO, $1, $3, temp);
+        	gen(MODULO, $1, $3, temp);
         $$ = temp;
 	}
 	| exp_a DIV_TK exp_a
 	{
 		int temp = newTemp(ENTERO);
-        gen(DIVENT, $1, $3, temp);
+        	gen(DIVENT, $1, $3, temp);
         $$ = temp;
 	}
 	| PARENTESIS_APERTURA_TK exp_a PARENTESIS_CIERRE_TK
@@ -430,19 +437,19 @@ exp_a:
 	| MENOS_TK exp_a %prec NEG_TK
 	{
 		NombreDeTipoT tipo = obtenerTipoPorIndice($2);
-        int temp = newTemp(tipo);
-        
-        // Crear constante 0
-        char nombreCero[10];
-        sprintf(nombreCero, "_cero");
-        int idCero = buscarSimbolo(nombreCero);
-        if (idCero == -1) {
-            idCero = agregarVariable(nombreCero, tipo);
-        }
-        
-        OperadorT op = (tipo == REAL) ? RESTAREAL : RESTAENT;
-        gen(op, idCero, $2, temp);
-        $$ = temp;
+		int temp = newTemp(tipo);
+		
+		// Crear constante 0
+		char nombreCero[5];
+		sprintf(nombreCero, "_cero");
+		int idCero = buscarSimbolo(nombreCero);
+		if (idCero == -1) {
+		    idCero = agregarVariable(nombreCero, tipo);
+		}
+		
+		OperadorT op = (tipo == REAL) ? RESTAREAL : RESTAENT;
+		gen(op, idCero, $2, temp);
+        	$$ = temp;
 	}
 	| MAS_TK exp_a %prec POS_TK
 	{
@@ -452,23 +459,106 @@ exp_a:
 
 exp_b:
 	exp_b Y_TK exp_b
+	{
+		int temp = newTemp(BOOLEANO);
+		gen(Y_OP, $1, $3, temp);
+		$$ = temp;
+	}
 	| exp_b O_TK exp_b
+	{
+		int temp = newTemp(BOOLEANO);
+		gen(O_OP, $1, $3, temp);
+		$$ = temp;
+	}
 	| NO_TK exp_b
-	| exp_b DIVREAL_TK exp_b
+	{
+		int temp = newTemp(BOOLEANO);
+		gen(NO_OP, $2, -1, temp); //solo importa el $2
+		$$ = temp;
+	}
 	| operando_booleano
+	{
+		$$ = $1;
+	}
 	| VERDADERO_TK
+	{
+		// Crear literal booleano verdadero
+		int id = buscarSimbolo("_litverdadero");
+		if (id == -1) {
+			//si no existe agregarlo y usarlo
+			id = agregarVariable("_true", BOOLEANO);
+		}
+		$$ = id;
+	}
 	| FALSO_TK
+	{
+		// Crear literal booleano falso
+		int id = buscarSimbolo("_litfalso");
+		if (id == -1) {
+			id = agregarVariable("_false", BOOLEANO);
+		}
+		$$ = id;
+	}
 	| exp_a oprel exp_a
+	{
+		int temp = newTemp(BOOLEANO);
+		
+		// Determinar tipos
+		NombreDeTipoT tipo1 = obtenerTipoPorIndice($1);
+		NombreDeTipoT tipo2 = obtenerTipoPorIndice($3);
+		int esReal = (tipo1 == REAL || tipo2 == REAL);
+		
+		// Ajustar operador según el tipo
+		OperadorT op = $2; // Operador base de oprel
+		
+		//si es real (tenemos por defecto entero) se asigna real dependiendo si es menor,mayor etc
+		if (esReal) {
+			// Convertir a versión REAL
+			switch($2) {
+				case MENORENT: op = MENORREAL; break;
+				case MAYORENT: op = MAYORREAL; break;
+				case IGUALENT: op = IGUALREAL; break;
+				case DISTINTENT: op = DISTINREAL; break;
+				case MAYORIGUALENT: op = MAYORIGUALREAL; break;
+				case MENORIGUALENT: op = MENORIGUALREAL; break;
+				default: op = $2;
+			}
+		}
+		
+		gen(op, $1, $3, temp);
+		$$ = temp;
+	}
 	| PARENTESIS_APERTURA_TK exp_b PARENTESIS_CIERRE_TK
+	{
+		$$ = $2;
+	}
 	;
-
+	
 oprel:
 	MENOR_TK
+	{
+		$$ = MENORENT; //necesitamos saber si es ent o real -> por defecto entero
+	}
 	| MAYOR_TK
+	{
+		$$ = MAYORENT;
+	}
 	| IGUAL_TK
+	{
+		$$ = IGUALENT;
+	}
 	| DISTINTO_TK
+	{
+		$$ = DISTINTENT;
+	}
 	| MAYORIGUAL_TK
+	{
+		$$ = MAYORIGUALENT;
+	}
 	| MENORIGUAL_TK
+	{
+		$$ = MENORIGUALENT;
+	}
 	;
 
 
@@ -495,47 +585,90 @@ operando:
 	| operando REF_TK
 	| literal
 	{
-		char tempName[50];
+		char tempName[100];
 		int idTemp;
-
+		
 		switch($1.tipoDelValor) {
 			case ENTERO:
 				sprintf(tempName, "_lit%d", $1.valor.valorEntero);
 				break;
-
+				
 			case BOOLEANO:
 				if ($1.valor.valorBooleano == VERDADERO)
 					sprintf(tempName, "_litverdadero");
 				else
 					sprintf(tempName, "_litfalso");
 				break;
-
-			case REAL:
-				sprintf(tempName, "_lit%g", $1.valor.valorReal);
+				
+			case REAL: {
+				// Convertir el real a string sin notación científica
+				// y reemplazar caracteres problemáticos
+				char realStr[50];
+				sprintf(realStr, "%.6f", $1.valor.valorReal);
+				
+				// Reemplazar '.' por '_' y '-' por 'n' para nombre válido
+				sprintf(tempName, "_litr");
+				for (int i = 0; realStr[i] != '\0' && i < 40; i++) {
+					char c = realStr[i];
+					if (c == '.') strcat(tempName, "_");
+					else if (c == '-') strcat(tempName, "n");
+					else if (c >= '0' && c <= '9') {
+						char digit[2] = {c, '\0'};
+						strcat(tempName, digit);
+					}
+				}
 				break;
-
-			case CARACTER:
-				sprintf(tempName, "_lit%c", $1.valor.valorCaracter);
+			}
+				
+			case CARACTER: {
+				// Manejar caracteres especiales
+				char c = $1.valor.valorCaracter;
+				if (c == ' ')
+					sprintf(tempName, "_lit_espacio");
+				else if (c == '\n')
+					sprintf(tempName, "_lit_salto");
+				else if (c == '\t')
+					sprintf(tempName, "_lit_tab");
+				else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+					sprintf(tempName, "_lit_%c", c);
+				else
+					sprintf(tempName, "_lit_car_%d", (int)c);
 				break;
-
-			case CADENA:
-				// convertir espacios u otros símbolos
+			}
+				
+			case CADENA: {
+				// Para cadenas, crear un nombre único basado en hash o contador
+				static int contadorCadenas = 0;
+				sprintf(tempName, "_lit_cadena_%d", contadorCadenas++);
 				break;
-
+			}
+				
 			default:
-				sprintf(tempName, "_lit_temp");
+				sprintf(tempName, "_lit_desconocido");
+				break;
 		}
+		
 		// Verificar si ya existe en tabla de símbolos
 		idTemp = buscarSimbolo(tempName);
-		if(idTemp == -1)
+		if (idTemp == -1) {
 			idTemp = agregarVariable(tempName, $1.tipoDelValor);
+		}
+		
 		$$ = idTemp;
 	}
-
 	;
 
 operando_booleano:
 	IDBOOLEANO_TK
+	{
+		// Buscar la variable booleana en la tabla de símbolos
+		int id = buscarSimbolo($1);
+		if (id == -1) {
+			printf("Error: variable booleana '%s' no declarada\n", $1);
+			exit(1);
+		}
+		$$ = id;
+	}
 	;
 
 
@@ -560,8 +693,10 @@ asignacion:
 	}
 	| operando_booleano ASIGNACION_TK expresion
 	{
+		printf("DEBUG: ASIGNACION BOOLEANA: id_dest=%d id_src=%d\n", $1, $3);
+		gen(ASIGNACION, $3, -1, $1);
 	}
-	;
+    	;
 
 alternativa:
 	SI_TK expresion ENTONCES_TK instrucciones lista_opciones FSI_TK

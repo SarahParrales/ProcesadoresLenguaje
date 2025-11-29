@@ -362,32 +362,32 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[242] =
     {   0,
-        6,    6,   77,   75,   71,   71,   75,   75,   69,   70,
-       64,    1,   52,    2,   68,   65,    5,   53,   51,   62,
+        7,    7,   77,   75,   71,   71,   75,   75,   69,   70,
+       64,    1,   52,    2,   68,   65,    6,   53,   51,   62,
        56,   61,   73,   72,   73,   73,   73,   73,   73,   73,
        73,   73,    4,   73,   73,   73,   73,   73,    3,   57,
-       58,   66,   67,   71,    0,    0,    7,    0,    0,    5,
-        0,   54,    6,    6,   50,   60,   63,   59,   73,   73,
-       73,   72,   72,   73,   73,   17,   73,    0,    0,    6,
+       58,   66,   67,   71,    0,    0,    8,    0,    0,    6,
+        0,   54,    7,    7,   50,   60,   63,   59,   73,   73,
+       73,   72,   72,   73,   73,   18,   73,    0,    0,    7,
        73,   73,   73,   73,   73,   73,   73,   73,   73,   73,
-       73,   73,   73,   38,   73,   73,   73,   43,   73,   73,
-       73,   73,   73,   55,    0,    0,   74,    8,    7,    6,
+       73,   73,   73,    5,   73,   73,   73,   43,   73,   73,
+       73,   73,   73,   55,    0,    0,   74,    9,    8,    7,
 
-       73,   73,   72,   73,   73,   73,   18,   19,   22,   20,
-       73,   73,   73,   73,   73,   73,   29,   73,   73,   73,
-       73,   73,   73,   73,   37,   73,   73,   41,   42,   73,
+       73,   73,   72,   73,   73,   73,   19,   20,   23,   21,
+       73,   73,   73,   73,   73,   73,   30,   73,   73,   73,
+       73,   73,   73,   73,   38,   73,   73,   41,   42,   73,
        73,   73,   47,   73,    0,    0,   73,   73,   72,   73,
        73,   73,   73,   73,   73,   73,   73,   73,   73,   73,
-       73,   73,   73,   73,   33,   73,   73,   73,   39,   40,
+       73,   73,   73,   73,   34,   73,   73,   73,   39,   40,
        73,   45,   73,   73,    0,    0,   73,   73,   72,   73,
-       73,   15,   73,   73,   73,   73,    9,   73,   73,   73,
-       28,   30,   73,   73,   34,   35,   73,   44,   46,   73,
-        0,    0,   10,   73,   72,   13,   73,   73,   21,   73,
+       73,   16,   73,   73,   73,   73,   10,   73,   73,   73,
+       29,   31,   73,   73,   35,   36,   73,   44,   46,   73,
+        0,    0,   11,   73,   72,   14,   73,   73,   22,   73,
 
-       73,   25,   73,   73,   31,   73,   73,   73,    0,    0,
-       73,   72,   73,   73,   23,   73,   73,   73,   32,   73,
-       73,    0,   49,    0,   48,   73,   12,   14,   73,   73,
-       26,   73,   36,   73,   11,   16,   73,   27,    9,   24,
+       73,   26,   73,   73,   32,   73,   73,   73,    0,    0,
+       73,   72,   73,   73,   24,   73,   73,   73,   33,   73,
+       73,    0,   49,    0,   48,   73,   13,   15,   73,   73,
+       27,   73,   37,   73,   12,   17,   73,   28,   10,   25,
         0
     } ;
 
@@ -958,28 +958,37 @@ case 3:
 YY_RULE_SETUP
 #line 130 "scannerNuestro.l"
 {
+    printf("DEBUG: Reconocido Y_TK\n");  // Debug temporal
     return Y_TK;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 134 "scannerNuestro.l"
+#line 135 "scannerNuestro.l"
 {
+    printf("DEBUG: Reconocido O_TK\n");  // Debug temporal
     return O_TK;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 139 "scannerNuestro.l"
+{
+	return NO_TK;
+}
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 144 "scannerNuestro.l"
 {  
 	printf("DEBUG entero: %s\n", yytext);
     yylval.literal.tipoDelValor = ENTERO;
     yylval.literal.valor.valorEntero = atoi(yytext);
     return LITERAL_ENTERO_TK;}
 	YY_BREAK
-case 6:
+case 7:
 YY_RULE_SETUP
-#line 145 "scannerNuestro.l"
+#line 150 "scannerNuestro.l"
 {  
 	char * cadena;
 	if (yytext[strlen(yytext)-1] == 'r' || yytext[strlen(yytext)-1] == 'R') {
@@ -998,10 +1007,10 @@ YY_RULE_SETUP
     
 }
 	YY_BREAK
-case 7:
-/* rule 7 can match eol */
+case 8:
+/* rule 8 can match eol */
 YY_RULE_SETUP
-#line 163 "scannerNuestro.l"
+#line 168 "scannerNuestro.l"
 {  //'hola'
     yylval.literal.tipoDelValor = CADENA;
 	//Es necesario reservar memoria para la cadena. No puedo usar la de yytext.
@@ -1013,18 +1022,18 @@ YY_RULE_SETUP
 		return LITERAL_CADENA_TK;
 }
 	YY_BREAK
-case 8:
+case 9:
 YY_RULE_SETUP
-#line 173 "scannerNuestro.l"
+#line 178 "scannerNuestro.l"
 {  //"b"
     yylval.literal.tipoDelValor = CARACTER;
 	yylval.literal.valor.valorCaracter = yytext[1];
 	return LITERAL_CARACTER_TK;
 }
 	YY_BREAK
-case 9:
+case 10:
 YY_RULE_SETUP
-#line 179 "scannerNuestro.l"
+#line 184 "scannerNuestro.l"
 {
     yylval.literal.tipoDelValor = BOOLEANO;  // tipo definido en literal.h
     if (strcasecmp(yytext, "verdadero") == 0) {
@@ -1035,268 +1044,261 @@ YY_RULE_SETUP
     return LITERAL_BOOLEANO_TK;
 }
 	YY_BREAK
-case 10:
+case 11:
 YY_RULE_SETUP
-#line 189 "scannerNuestro.l"
+#line 194 "scannerNuestro.l"
 {
 	return ACCION_TK;
 }
 	YY_BREAK
-case 11:
+case 12:
 YY_RULE_SETUP
-#line 193 "scannerNuestro.l"
+#line 198 "scannerNuestro.l"
 {
 	return ALGORITMO_TK;
 }
 	YY_BREAK
-case 12:
+case 13:
 YY_RULE_SETUP
-#line 197 "scannerNuestro.l"
+#line 202 "scannerNuestro.l"
 {
 	return BOOLEANO_TK;
 }
 	YY_BREAK
-case 13:
+case 14:
 YY_RULE_SETUP
-#line 201 "scannerNuestro.l"
+#line 206 "scannerNuestro.l"
 {
 	return CADENA_TK;
 }
 	YY_BREAK
-case 14:
+case 15:
 YY_RULE_SETUP
-#line 205 "scannerNuestro.l"
+#line 210 "scannerNuestro.l"
 {
 	return CARACTER_TK;
 }
 	YY_BREAK
-case 15:
+case 16:
 YY_RULE_SETUP
-#line 209 "scannerNuestro.l"
+#line 214 "scannerNuestro.l"
 {
 	return CONST_TK;
 }
 	YY_BREAK
-case 16:
+case 17:
 YY_RULE_SETUP
-#line 213 "scannerNuestro.l"
+#line 218 "scannerNuestro.l"
 {
 	return CONTINUAR_TK;
 }
 	YY_BREAK
-case 17:
+case 18:
 YY_RULE_SETUP
-#line 217 "scannerNuestro.l"
+#line 222 "scannerNuestro.l"
 {
 	return DE_TK;
 }
 	YY_BREAK
-case 18:
+case 19:
 YY_RULE_SETUP
-#line 221 "scannerNuestro.l"
+#line 226 "scannerNuestro.l"
 {
 	return DEV_TK;
 }
 	YY_BREAK
-case 19:
+case 20:
 YY_RULE_SETUP
-#line 225 "scannerNuestro.l"
+#line 230 "scannerNuestro.l"
 {
 	return DIV_TK;
 }
 	YY_BREAK
-case 20:
+case 21:
 YY_RULE_SETUP
-#line 229 "scannerNuestro.l"
+#line 234 "scannerNuestro.l"
 {
 	return ENT_TK;
 }
 	YY_BREAK
-case 21:
+case 22:
 YY_RULE_SETUP
-#line 233 "scannerNuestro.l"
+#line 238 "scannerNuestro.l"
 {
 	return ENTERO_TK;
 }
 	YY_BREAK
-case 22:
+case 23:
 YY_RULE_SETUP
-#line 237 "scannerNuestro.l"
+#line 242 "scannerNuestro.l"
 {
 	return E_S_TK;
 }
 	YY_BREAK
-case 23:
+case 24:
 YY_RULE_SETUP
-#line 241 "scannerNuestro.l"
+#line 246 "scannerNuestro.l"
 {
 	return FACCION_TK;
 }
 	YY_BREAK
-case 24:
+case 25:
 YY_RULE_SETUP
-#line 245 "scannerNuestro.l"
+#line 250 "scannerNuestro.l"
 {
 	return FALGORITMO_TK;
 }
 	YY_BREAK
-case 25:
+case 26:
 YY_RULE_SETUP
-#line 249 "scannerNuestro.l"
+#line 254 "scannerNuestro.l"
 {
 	return FCONST_TK;
 }
 	YY_BREAK
-case 26:
+case 27:
 YY_RULE_SETUP
-#line 253 "scannerNuestro.l"
+#line 258 "scannerNuestro.l"
 {
 	return FFUNCION_TK;
 }
 	YY_BREAK
-case 27:
+case 28:
 YY_RULE_SETUP
-#line 257 "scannerNuestro.l"
+#line 262 "scannerNuestro.l"
 {
 	return FMIENTRAS_TK;
 }
 	YY_BREAK
-case 28:
+case 29:
 YY_RULE_SETUP
-#line 261 "scannerNuestro.l"
+#line 266 "scannerNuestro.l"
 {
 	return FPARA_TK;
 }
 	YY_BREAK
-case 29:
+case 30:
 YY_RULE_SETUP
-#line 265 "scannerNuestro.l"
+#line 270 "scannerNuestro.l"
 {
 	return FSI_TK;
 }
 	YY_BREAK
-case 30:
+case 31:
 YY_RULE_SETUP
-#line 269 "scannerNuestro.l"
+#line 274 "scannerNuestro.l"
 {
 	return FTIPO_TK;
 }
 	YY_BREAK
-case 31:
+case 32:
 YY_RULE_SETUP
-#line 273 "scannerNuestro.l"
+#line 278 "scannerNuestro.l"
 {
 	return FTUPLA_TK;
 }
 	YY_BREAK
-case 32:
+case 33:
 YY_RULE_SETUP
-#line 277 "scannerNuestro.l"
+#line 282 "scannerNuestro.l"
 {
 	return FUNCION_TK;
 }
 	YY_BREAK
-case 33:
+case 34:
 YY_RULE_SETUP
-#line 281 "scannerNuestro.l"
+#line 286 "scannerNuestro.l"
 {
 	return FVAR_TK;
 }
 	YY_BREAK
-case 34:
+case 35:
 YY_RULE_SETUP
-#line 285 "scannerNuestro.l"
+#line 290 "scannerNuestro.l"
 {
 	return HACER_TK;
 }
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
-#line 289 "scannerNuestro.l"
+#line 294 "scannerNuestro.l"
 {
 	return HASTA_TK;
 }
 	YY_BREAK
-case 36:
+case 37:
 YY_RULE_SETUP
-#line 293 "scannerNuestro.l"
+#line 298 "scannerNuestro.l"
 {
 	return MIENTRAS_TK;
 }
 	YY_BREAK
-case 37:
+case 38:
 YY_RULE_SETUP
-#line 297 "scannerNuestro.l"
+#line 302 "scannerNuestro.l"
 {
 	return MOD_TK;
 }
 	YY_BREAK
-case 38:
-YY_RULE_SETUP
-#line 301 "scannerNuestro.l"
-{
-	return NO_TK;
-}
-	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 305 "scannerNuestro.l"
+#line 306 "scannerNuestro.l"
 {
 	return PARA_TK;
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 309 "scannerNuestro.l"
+#line 310 "scannerNuestro.l"
 {
 	return REAL_TK;
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 313 "scannerNuestro.l"
+#line 314 "scannerNuestro.l"
 {
 	return REF_TK;
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 317 "scannerNuestro.l"
+#line 318 "scannerNuestro.l"
 {
 	return SAL_TK;
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 321 "scannerNuestro.l"
+#line 322 "scannerNuestro.l"
 {
 	return SI_TK;
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 325 "scannerNuestro.l"
+#line 326 "scannerNuestro.l"
 {
 	return TABLA_TK;
 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 329 "scannerNuestro.l"
+#line 330 "scannerNuestro.l"
 {
 	return TIPO_TK;
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 333 "scannerNuestro.l"
+#line 334 "scannerNuestro.l"
 {
 	return TUPLA_TK;
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 337 "scannerNuestro.l"
+#line 338 "scannerNuestro.l"
 {
 	return VAR_TK;
 }
@@ -1304,7 +1306,7 @@ YY_RULE_SETUP
 case 48:
 /* rule 48 can match eol */
 YY_RULE_SETUP
-#line 341 "scannerNuestro.l"
+#line 342 "scannerNuestro.l"
 {
 	return PRECONDICION_TK;
 }
@@ -1312,154 +1314,154 @@ YY_RULE_SETUP
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
-#line 345 "scannerNuestro.l"
+#line 346 "scannerNuestro.l"
 {
 	return POSTCONDICION_TK;
 }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 349 "scannerNuestro.l"
+#line 350 "scannerNuestro.l"
 {  
 	return ASIGNACION_TK;
 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 353 "scannerNuestro.l"
+#line 354 "scannerNuestro.l"
 {  
 	return PUNTOYCOMA_TK;
 }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 357 "scannerNuestro.l"
+#line 358 "scannerNuestro.l"
 {  
 	return COMA_TK;
 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 361 "scannerNuestro.l"
+#line 362 "scannerNuestro.l"
 {  
 	return DOSPUNTOS_TK;
 }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 365 "scannerNuestro.l"
+#line 366 "scannerNuestro.l"
 {  
 	return ENTONCES_TK;
 }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 369 "scannerNuestro.l"
+#line 370 "scannerNuestro.l"
 {  
 	return SINO_SI_TK;
 }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 373 "scannerNuestro.l"
+#line 374 "scannerNuestro.l"
 {  
 	return IGUAL_TK;
 }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 377 "scannerNuestro.l"
+#line 378 "scannerNuestro.l"
 {  
 	return INICIO_ARRAY_TK;
 }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 381 "scannerNuestro.l"
+#line 382 "scannerNuestro.l"
 {  
 	return CIERRE_ARRAY_TK;
 }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 385 "scannerNuestro.l"
+#line 386 "scannerNuestro.l"
 {  
 	return MAYORIGUAL_TK;
 }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 389 "scannerNuestro.l"
+#line 390 "scannerNuestro.l"
 {  
 	return MENORIGUAL_TK;
 }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 393 "scannerNuestro.l"
+#line 394 "scannerNuestro.l"
 {  
 	return MAYOR_TK;
 }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 397 "scannerNuestro.l"
+#line 398 "scannerNuestro.l"
 {  
 	return MENOR_TK;
 }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 401 "scannerNuestro.l"
+#line 402 "scannerNuestro.l"
 {  
 	return DISTINTO_TK;
 }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 405 "scannerNuestro.l"
+#line 406 "scannerNuestro.l"
 {  
 	return MULTIPLICACION_TK;
 }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 409 "scannerNuestro.l"
+#line 410 "scannerNuestro.l"
 {  
 	return DIVREAL_TK;
 }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 413 "scannerNuestro.l"
+#line 414 "scannerNuestro.l"
 {  
 	return LLAVE_APERTURA_TK;
 }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 417 "scannerNuestro.l"
+#line 418 "scannerNuestro.l"
 {  
 	return LLAVE_CIERRE_TK;
 }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 421 "scannerNuestro.l"
+#line 422 "scannerNuestro.l"
 {  
 	return PUNTO_TK;
 }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 425 "scannerNuestro.l"
+#line 426 "scannerNuestro.l"
 {  
 	return PARENTESIS_APERTURA_TK;
 }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 429 "scannerNuestro.l"
+#line 430 "scannerNuestro.l"
 {  
 	return PARENTESIS_CIERRE_TK;
 }
@@ -1467,7 +1469,7 @@ YY_RULE_SETUP
 case 71:
 /* rule 71 can match eol */
 YY_RULE_SETUP
-#line 434 "scannerNuestro.l"
+#line 435 "scannerNuestro.l"
 {
     // Ignorar espacios, tab y salto de línea
 
@@ -1475,7 +1477,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 439 "scannerNuestro.l"
+#line 440 "scannerNuestro.l"
 {
     printf("IDBOOLEANO_TK, %s\n", yytext);
 	yylval.cadena = strdup(yytext);
@@ -1484,7 +1486,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 445 "scannerNuestro.l"
+#line 446 "scannerNuestro.l"
 {
     printf("ID_TK, %s\n", yytext);
 	yylval.cadena = strdup(yytext);
@@ -1494,24 +1496,24 @@ YY_RULE_SETUP
 case 74:
 /* rule 74 can match eol */
 YY_RULE_SETUP
-#line 452 "scannerNuestro.l"
+#line 453 "scannerNuestro.l"
 {
     return COMENTARIO_TK;
 }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 457 "scannerNuestro.l"
+#line 458 "scannerNuestro.l"
 {  
     printf("ERROR_TK, %s\n", yytext);
 }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 462 "scannerNuestro.l"
+#line 463 "scannerNuestro.l"
 ECHO;
 	YY_BREAK
-#line 1515 "lex.yy.c"
+#line 1517 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2516,7 +2518,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 462 "scannerNuestro.l"
+#line 463 "scannerNuestro.l"
 
 
  //PARTE 3: CODIGO ADICIONAL

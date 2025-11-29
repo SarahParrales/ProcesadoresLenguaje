@@ -127,11 +127,16 @@ PARENTESIS_CIERRE_D  \)
 }
 
 {Y_D} {
+    printf("DEBUG: Reconocido Y_TK\n");  // Debug temporal
     return Y_TK;
 }
 
 {O_D} {
+    printf("DEBUG: Reconocido O_TK\n");  // Debug temporal
     return O_TK;
+}
+{NO_D} {
+	return NO_TK;
 }
 
 
@@ -295,10 +300,6 @@ PARENTESIS_CIERRE_D  \)
 
 {MOD_D} {
 	return MOD_TK;
-}
-
-{NO_D} {
-	return NO_TK;
 }
 
 {PARA_D} {

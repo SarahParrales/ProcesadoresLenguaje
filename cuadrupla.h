@@ -12,7 +12,18 @@ typedef enum {
     DIVENT, DIVREAL,
     ASIGNACION,
     SALTO,
-    MODULO
+    MODULO,
+    // Operadores booleanos
+    Y_OP,           // AND lógico
+    O_OP,           // OR lógico
+    NO_OP,          // NOT lógico
+    // Operadores relacionales
+    MENORIGUALENT, MENORIGUALREAL,
+    MAYORENT, MAYORREAL,
+    IGUALENT, IGUALREAL,
+    DISTINTENT, DISTINREAL,
+    MENORENT, MENORREAL,
+    MAYORIGUALENT, MAYORIGUALREAL
 } OperadorT;
 
 typedef struct {

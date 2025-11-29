@@ -1,21 +1,22 @@
 algoritmo intercambio;
-ent a, d: entero;
+ent a, d: real;
 b: booleano;
-sal a, d,e: entero;
+c: entero;
+sal a, d,e: real;
 {Prec: a= A AND d = D AND b = B}
 const
-  C1 = 1;
+  C1 = 5;
   C2 = verdadero;
 fconst;
 var
-  aux: entero;
+  aux: real;
 fvar;
-
-b := falso;
+b := verdadero;
 aux := a;
 a := d + aux;
 a := d - e;
-e := a + 5;
+e := -a;
+c := 5;
 d := aux
 {Post: d = A AND a = D and b = B}
 falgoritmo.

@@ -13,7 +13,14 @@ static int contadorTemp = 0;
 const char* nombreOperador[] = {
     "SUMAENT", "SUMAREAL", "RESTAENT", "RESTAREAL",
     "MULTENT", "MULTREAL", "DIVENT", "DIVREAL",
-    "ASIGNACION", "SALTO","MODULO"
+    "ASIGNACION", "SALTO","MODULO",
+    "Y_OP", "O_OP", "NO_OP",
+    "MENORIGUALENT", "MENORIGUALREAL",
+    "MAYORENT", "MAYORREAL",
+    "IGUALENT", "IGUALREAL",
+    "DISTINTENT", "DISTINREAL",
+    "MENORENT", "MENORREAL",
+    "MAYORIGUALENT", "MAYORIGUALREAL"
 };
 
 /**
