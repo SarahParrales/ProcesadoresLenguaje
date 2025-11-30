@@ -569,7 +569,7 @@ operando:
 		int id = buscarSimbolo($1);
 		if (id == -1) {
 			// Si es una constante, buscarla en tabla de constantes
-			LiteralT* lit = buscarConstante(&tc, $1);
+			LiteralT* lit = buscarConstante(tc, $1);
 			if (lit != NULL) {
 				// Crear entrada temporal en tabla de símbolos para la constante
 				id = agregarVariable($1, lit->tipoDelValor);

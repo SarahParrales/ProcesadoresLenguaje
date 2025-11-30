@@ -27,11 +27,9 @@ bool insertaConstante(TablaDeConstantes * ptc, char * pnombre, LiteralT v){
     }
 }
 
-LiteralT* buscarConstante(TablaDeConstantes* tc, const char* nombre) {
-    TablaDeConstantes tabla = *tc; // Obtener el puntero a la primera celda
-
-    // Iterar sobre la lista enlazada 'tabla'
-    for (Celda *actual = tabla; actual != NULL; actual = actual->sig) {
+LiteralT* buscarConstante(TablaDeConstantes tc, char* nombre) {
+    // Iterar sobre la lista enlazada
+    for (Celda *actual = tc; actual != NULL; actual = actual->sig) {
         if (strcmp(actual->nombre, nombre) == 0) {
             return &(actual->valor);
         }
@@ -52,4 +50,5 @@ void imprimeTablaDeConstantes(TablaDeConstantes tc){
             aux = aux->sig;
         }
     }
-}
+}
+

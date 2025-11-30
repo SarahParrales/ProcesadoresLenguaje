@@ -1908,7 +1908,7 @@ yyreduce:
 		int id = buscarSimbolo((yyvsp[0].cadena));
 		if (id == -1) {
 			// Si es una constante, buscarla en tabla de constantes
-			LiteralT* lit = buscarConstante(&tc, (yyvsp[0].cadena));
+			LiteralT* lit = buscarConstante(tc, (yyvsp[0].cadena));
 			if (lit != NULL) {
 				// Crear entrada temporal en tabla de símbolos para la constante
 				id = agregarVariable((yyvsp[0].cadena), lit->tipoDelValor);
